@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd
+  namespace: argocd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: argocd-server
+          image: argoproj/argocd:v2.2.1
+
+- name: Deploy ArgoCD
+  run: |
+    kubectl apply -k ./kustomize
